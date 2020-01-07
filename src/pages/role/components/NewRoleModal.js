@@ -27,8 +27,8 @@ class NewRoleModal extends React.Component {
   onOk = () => {
     const { form, dispatch } = this.props;
     const { resetFields } = form;
-    const roleInfo = localStorage.getItem('roleInfo')
-      ? JSON.parse(localStorage.getItem('roleInfo'))
+    const roleInfo = sessionStorage.getItem('roleInfo')
+      ? JSON.parse(sessionStorage.getItem('roleInfo'))
       : '';
     const staffId = roleInfo ? roleInfo.staffId : '';
     this.props.form.validateFields((err, values) => {

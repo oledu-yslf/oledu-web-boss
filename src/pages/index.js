@@ -1,9 +1,14 @@
 import styles from './index.less';
+import React from 'react';
+import router from 'umi/router';
 
-export default function() {
-  return (
-    <div className={styles.normal}>
-      
-    </div>
-  );
+class Index extends React.Component {
+  componentWillMount() {
+    router.push('/depart');
+  }
+  render() {
+    return <div className={styles.normal}></div>;
+  }
 }
+
+export default Index;

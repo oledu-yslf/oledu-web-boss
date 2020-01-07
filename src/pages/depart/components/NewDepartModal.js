@@ -32,8 +32,8 @@ class NewDepartModal extends React.Component {
   onOk = () => {
     const { form, dispatch } = this.props;
     const { resetFields } = form;
-    const roleInfo = localStorage.getItem('roleInfo')
-      ? JSON.parse(localStorage.getItem('roleInfo'))
+    const roleInfo = sessionStorage.getItem('roleInfo')
+      ? JSON.parse(sessionStorage.getItem('roleInfo'))
       : '';
     const staffId = roleInfo ? roleInfo.staffId : '';
     this.props.form.validateFields((err, values) => {
@@ -41,6 +41,10 @@ class NewDepartModal extends React.Component {
         let state = values.departState;
         if (!this.props.departDetail.departId) {
           resetFields();
+          this.setState({
+            departState: 1,
+            departKindType: 1,
+          });
           dispatch({
             type: 'depart/departSave',
             payload: Object.assign(
@@ -48,11 +52,15 @@ class NewDepartModal extends React.Component {
                 ...values,
                 createStaffId: staffId,
               },
-              { state, departLevel: values.departKindType },
+              { state:1, departLevel: values.departKindType },
             ),
           });
         } else {
           resetFields();
+          this.setState({
+            departState: 1,
+            departKindType: 1,
+          });
           dispatch({
             type: 'depart/departUpdate',
             payload: Object.assign(
@@ -74,9 +82,9 @@ class NewDepartModal extends React.Component {
 
   departTypeChange = e => {
     console.log('change')
-    const { dispatch } = this.props;
+    const { dispatch,form } = this.props;
     let departKindType = parseInt(e.target.value);
-
+    form.setFieldsValue({parentDepartId:''})
     this.setState({
       departKindType,
     });
@@ -115,7 +123,7 @@ class NewDepartModal extends React.Component {
     const { getFieldDecorator } = form;
     let { departName, departNameEn, parentDepartId, remark } = departDetail;
     let { departKindType, departState } = this.state;
-
+    console.log(departDetail);
     return (
       <Modal
         visible={editDepartVisible}
@@ -152,7 +160,8 @@ class NewDepartModal extends React.Component {
               </Radio.Group>,
             )}
           </Form.Item>
-          <Form.Item label="部门状态">
+          {
+            departDetail.departId && <Form.Item label="部门状态">
             {getFieldDecorator('departState', {
               initialValue: departState,
               rules: [{ required: true, message: '请选择部门状态！' }],
@@ -163,6 +172,8 @@ class NewDepartModal extends React.Component {
               </Radio.Group>,
             )}
           </Form.Item>
+          }
+          
           {departKindType !== 1 ? (
             <Form.Item label="部门所属">
               {getFieldDecorator('parentDepartId', {

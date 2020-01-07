@@ -33,9 +33,17 @@ export default {
         },
       }); 
     },
-    *departList({ payload }, { call, put }) {
+    *departList({ payload }, { call, put ,select}) {
       const data = yield call(service.departList,payload)
+      const departDetail = yield select(state=>state.depart.departDetail);
       const parentDepartList = data.data;
+      // let index;
+      for(let i=0;i<parentDepartList.length;i++){
+        if(parentDepartList[i].departId === departDetail.departId){
+          parentDepartList.splice(i,1);
+          break;
+        }
+      }
       yield put({
         type: 'save',
         payload: {

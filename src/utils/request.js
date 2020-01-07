@@ -49,7 +49,7 @@ request.interceptors.request.use(
 );
 
 const isTokenExpired = data => {
-  if (data.code == 401 && data.msg.indexOf('Access token expired') != -1) {
+  if (data.code === 401 && data.msg.indexOf('Access token expired') !== -1) {
     return true;
   } else {
     return false;
