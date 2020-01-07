@@ -131,13 +131,12 @@ class NewRoleModal extends React.Component {
           <Form.Item label="父角色">
             {getFieldDecorator('rolePid', {
               initialValue: rolePid,
-              rules: [{ required: true, message: '请选择父角色！' }],
             })(
               <TreeSelect
                 showSearch
                 style={{ width: '440px' }}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                placeholder="请选择课程分类"
+                placeholder="请选择父角色！"
                 allowClear
                 onChange={this.treeChange}
               >

@@ -43,7 +43,8 @@ class Role extends React.Component {
 
   setDeleteRoleVisible = () => {
     const { dispatch, selectedKeys, selectedNodes } = this.props;
-    if (selectedKeys.length > 0) {
+    console.log(selectedKeys);
+    if (selectedKeys.length > 0 && selectedKeys[0] != '1') {
       dispatch({
         type: 'role/save',
         payload: {
@@ -51,8 +52,10 @@ class Role extends React.Component {
           deteleRoleVisible: true,
         },
       });
-    } else {
+    } else if (selectedKeys.length === 0) {
       message.warning('请先选择操作节点！');
+    } else {
+      message.warning('超级管理员角色不能删除');
     }
   };
 
