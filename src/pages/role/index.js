@@ -11,7 +11,7 @@ class Role extends React.Component {
   toAuth = () => {
     const { selectedKeys, selectedNodes } = this.props;
     if (selectedKeys.length > 0) {
-      router.push(`/auth?roleId=${selectedNodes.roleId}`);
+      router.push(`/authEdit?roleId=${selectedNodes.roleId}`);
     } else {
       message.warning('请先选择操作节点！');
     }
@@ -137,7 +137,7 @@ class Role extends React.Component {
           onCancel={this.handleCancel}
           confirmLoading={loading}
         >
-          <p>删除{roleDetail.roleName}会一并下面的子角色,确定删除该角色吗？</p>
+          <p>确定删除{roleDetail.roleName}角色吗？</p>
         </Modal>
       </div>
     );
