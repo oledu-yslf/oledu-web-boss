@@ -159,17 +159,13 @@ class AuthEdit extends React.Component {
         checkedTreeKeys.push(nextProps.roleMenuVOList[j].menuId);
       }
       this.setState({
-        checkedFunKeys,checkedTreeKeys
+        checkedFunKeys,
+        checkedTreeKeys,
       });
     }
   }
   render() {
-    const {
-      loading,
-      menuList,
-      selectedNodes,
-      selectedKeys,
-    } = this.props;
+    const { loading, menuList, selectedNodes, selectedKeys, roleName } = this.props;
     const { menuFunVOList } = selectedNodes;
     const { checkedTreeKeys, checkAll, checkedFunKeys } = this.state;
     const renderTreeNodes = data => {
@@ -188,8 +184,9 @@ class AuthEdit extends React.Component {
     };
     return (
       <div className={styles.normal}>
+        <div style={{ fontSize: '20px', marginBottom: '20px' }}>{roleName}权限编辑</div>
         <Row gutter={24}>
-          <Col span={8}>
+          <Col span={6}>
             <div style={{ fontSize: '16px' }}>菜单权限</div>
             <Divider type="horizontal" />
 
@@ -207,7 +204,7 @@ class AuthEdit extends React.Component {
               </Tree>
             )}
           </Col>
-          <Col span={16}>
+          <Col span={18}>
             <div style={{ fontSize: '16px' }}>按钮权限</div>
             <Divider type="horizontal" />
             <Row>
@@ -237,7 +234,12 @@ class AuthEdit extends React.Component {
         </Row>
         <Row>
           <Col spna={24}>
-            <Button type="primary" onClick={this.handleAuth} disabled={loading} style={{margin:'30px'}}>
+            <Button
+              type="primary"
+              onClick={this.handleAuth}
+              disabled={loading}
+              style={{ margin: '30px' }}
+            >
               提交
             </Button>
           </Col>

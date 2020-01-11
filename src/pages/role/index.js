@@ -11,7 +11,7 @@ class Role extends React.Component {
   toAuth = () => {
     const { selectedKeys, selectedNodes } = this.props;
     if (selectedKeys.length > 0) {
-      router.push(`/authEdit?roleId=${selectedNodes.roleId}`);
+      router.push(`/authEdit?roleId=${selectedNodes.roleId}&roleName=${selectedNodes.roleName}`);
     } else {
       message.warning('请先选择操作节点！');
     }

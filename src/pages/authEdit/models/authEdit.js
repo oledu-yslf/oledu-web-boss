@@ -19,6 +19,8 @@ export default {
             type: 'save',
             payload: {
               roleId: query.roleId,
+              roleName: query.roleName,
+
             },
           });
           dispatch({
