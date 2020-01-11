@@ -15,3 +15,11 @@ export async function getRoleDetail (params) {
     data: params,
   })
 }
+
+export async function rolerightUpdate (params) {
+  return request({
+    url:  '/api/sys/roleright/update',
+    method: 'post',
+    data: params,
+  })
+}

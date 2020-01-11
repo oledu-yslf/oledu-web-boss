@@ -1,7 +1,12 @@
 import * as service from '../services/authEdit';
+import {message} from 'antd';
+import router from 'umi/router';
+
 export default {
   namespace: 'authEdit',
   state: {
+    selectedNodes:{},
+    selectedKeys:[],
     roleFunList: [],
     roleMenuVOList: [],
     menuList:[]
@@ -49,6 +54,14 @@ export default {
           menuList: menuList.data,
         },
       });
+    },
+    *rolerightUpdate({ payload }, { call, put }) {
+      const {code} = yield call(service.rolerightUpdate,payload);
+      if(code ===200){
+        message.success('权限更新成功').then(()=>{
+          router.goBack();
+        })
+      }
     },
   },
   reducers: {
