@@ -43,7 +43,6 @@ class BasicLayout extends React.Component {
   render() {
     const { children,currentRouter,currentRouterName } = this.props;
     const { collapsed ,contentHeight} = this.state;
-    console.log(contentHeight);
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>

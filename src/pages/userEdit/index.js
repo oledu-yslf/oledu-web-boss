@@ -9,6 +9,12 @@ const { RangePicker } = DatePicker;
 const { TreeNode } = TreeSelect;
 
 class UserEdit extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pwd: '',
+    };
+  }
   handleSubmit = e => {
     e.preventDefault();
     const { form, dispatch } = this.props;
@@ -18,8 +24,6 @@ class UserEdit extends React.Component {
       : '';
     const staffId = roleInfo ? roleInfo.staffId : '';
     this.props.form.validateFields((err, values) => {
-      console.log(values);
-
       const {
         departId,
         staffNo,
@@ -38,7 +42,17 @@ class UserEdit extends React.Component {
       } = values;
       const effDate = rangeTime[0].valueOf();
       const expDate = rangeTime[1].valueOf();
-      const birthday = birthdayTime.valueOf();
+      let birthday = '';
+      if (birthdayTime) {
+        birthday = birthdayTime.valueOf();
+      }
+      let baseStaffRoleList = [];
+      for (var i in roleId) {
+        let obj = {};
+        obj.roleId = roleId[i];
+        obj.createStaffId = staffId;
+        baseStaffRoleList.push(obj);
+      }
 
       if (!err) {
         if (!this.props.staffDetail.staffId) {
@@ -51,18 +65,17 @@ class UserEdit extends React.Component {
               staffName,
               staffPwd,
               sex,
-              birthday,
+              birthday: birthday,
               staffType,
               contactTel,
               email,
               address,
               state,
-              // eslint-disable-next-line no-dupe-keys
               effDate,
               expDate,
-              birthday,
               remark,
               createStaffId: staffId,
+              baseStaffRoleList,
             },
           });
         } else {
@@ -86,6 +99,7 @@ class UserEdit extends React.Component {
               expDate,
               remark,
               updateStaffId: staffId,
+              baseStaffRoleList,
             },
           });
         }
@@ -95,9 +109,11 @@ class UserEdit extends React.Component {
   componentWillUnmount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'save',
+      type: 'userEdit/save',
       payload: {
-        staffDetail: {}
+        staffDetail: {},
+        treeDepartData: [],
+        treeRoleData: [],
       },
     });
   }
@@ -118,8 +134,8 @@ class UserEdit extends React.Component {
       remark,
       expDate,
       effDate,
-      roleId,
       birthday,
+      roleVOMap,
     } = staffDetail;
     let rangeTime, birthdayTime;
     if (effDate && expDate) {
@@ -173,9 +189,30 @@ class UserEdit extends React.Component {
         });
       }
     };
+    let roleId = [];
+    if (roleVOMap) {
+      for (let i in roleVOMap) {
+        roleId.push(roleVOMap[i].roleId);
+      }
+    }
+
+    let inputType = 'input';
+    if (!staffNo) {
+      inputType = 'password';
+    }
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 4 },
+        sm: { span: 4 },
+      },
+      wrapperCol: {
+        xs: { span: 8 },
+        sm: { span: 8 },
+      },
+    };
     return (
       <div className={styles.normal}>
-        <Form layout="vertical" onSubmit={this.handleSubmit}>
+        <Form layout="vertical" onSubmit={this.handleSubmit} {...formItemLayout} labelAlign="right">
           <Form.Item label="所属部门">
             {getFieldDecorator('departId', {
               initialValue: departId,
@@ -183,7 +220,7 @@ class UserEdit extends React.Component {
             })(
               <TreeSelect
                 showSearch
-                style={{ width: '440px' }}
+                // style={{ width: '440px' }}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 placeholder="请选择所属部门"
                 allowClear
@@ -205,13 +242,14 @@ class UserEdit extends React.Component {
               rules: [{ required: true, message: '请输入员工姓名！' }],
             })(<Input />)}
           </Form.Item>
-
-          <Form.Item label="密码">
-            {getFieldDecorator('staffPwd', {
-              initialValue: staffPwd,
-              rules: [{ required: true, message: '请输入密码！' }],
-            })(<Input />)}
-          </Form.Item>
+          {!staffPwd && (
+            <Form.Item label="密码">
+              {getFieldDecorator('staffPwd', {
+                initialValue: staffPwd,
+                rules: [{ required: true, message: '请输入密码！' }],
+              })(<Input type={inputType} />)}
+            </Form.Item>
+          )}
 
           <Form.Item label="性别">
             {getFieldDecorator('sex', {
@@ -270,7 +308,7 @@ class UserEdit extends React.Component {
               </Radio.Group>,
             )}
           </Form.Item>
-          {/* <Form.Item label="所属角色">
+          <Form.Item label="所属角色">
             {getFieldDecorator('roleId', {
               initialValue: roleId,
               rules: [{ required: true, message: '请选择角色！' }],
@@ -278,7 +316,6 @@ class UserEdit extends React.Component {
               <TreeSelect
                 showSearch
                 multiple
-                style={{ width: '440px' }}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 placeholder="请选择角色！"
                 allowClear
@@ -287,7 +324,7 @@ class UserEdit extends React.Component {
                 {renderRoleTreeNodes(treeRoleData)}
               </TreeSelect>,
             )}
-          </Form.Item> */}
+          </Form.Item>
           <Form.Item label="生效起止日期">
             {getFieldDecorator('rangeTime', {
               initialValue: rangeTime,

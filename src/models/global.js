@@ -1,9 +1,10 @@
-const userRouter ='/user'
+const userRouter ='/user,/userEdit'
 const userRouterName = '用户管理';
+
 const departRouter ='/depart'
 const departRouterName = '部门管理';
 
-const roletRouter ='/role,/auth'
+const roletRouter ='/role,/authEdit'
 const roleRouterName = '角色管理';
 
 
