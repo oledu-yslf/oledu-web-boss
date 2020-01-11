@@ -7,7 +7,7 @@ export default {
   state: {
     userList: [],
     total:'',
-    staffName:'',staffType:'',state:'',deteleUserVisible:false,staffDetail:{}
+    staffName:'',staffType:'',state:'',deteleUserVisible:false,staffDetail:{},treeDepartData:[]
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -29,6 +29,9 @@ export default {
               },
             },
           });
+          dispatch({
+            type:'departListAll'
+          })
         }
       });
     },
@@ -42,6 +45,16 @@ export default {
         payload: {
           userList: result,
           total: count,
+        },
+      });
+    },
+    *departListAll({ payload }, { call, put ,select}){
+      const {data} = yield call(service.departListAll)
+      console.log(data);
+      yield put({
+        type: 'save',
+        payload: {
+          treeDepartData: data,
         },
       });
     },

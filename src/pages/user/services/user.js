@@ -15,3 +15,11 @@ export async function staffDelete (params) {
     data: params,
   })
 }
+
+export async function departListAll(params) {
+  return request({
+    url: '/api/sys/depart/listAll',
+    method: 'post',
+    data: params,
+  });
+}

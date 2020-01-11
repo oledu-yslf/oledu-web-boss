@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
-import { Table, Divider, Button, Form, Input, Select, Modal } from 'antd';
+import { Table, Divider, Button, Form, Input, Select, Modal,TreeSelect } from 'antd';
 import moment from 'moment';
 import styles from './index.less';
+const { TreeNode } = TreeSelect;
 
 const { Option } = Select;
 
@@ -104,8 +105,10 @@ class User extends React.Component {
     });
   }
 
+  
+
   render() {
-    const { userList, total, loading, deteleUserVisible, staffDetail } = this.props;
+    const { userList, total, loading, deteleUserVisible, staffDetail,treeDepartData } = this.props;
     const columns = [
       {
         title: '员工工号',
@@ -157,6 +160,32 @@ class User extends React.Component {
       },
     ];
     const { getFieldDecorator } = this.props.form;
+    const renderDepartTreeNodes = data => {
+      if (data) {
+        return data.map(item => {
+          if (item.childDepartVOList) {
+            return (
+              <TreeNode
+                value={item.departId}
+                title={item.departName}
+                key={item.departId}
+                dataRef={item}
+              >
+                {renderDepartTreeNodes(item.childDepartVOList)}
+              </TreeNode>
+            );
+          }
+          return (
+            <TreeNode
+              value={item.departId}
+              title={item.departName}
+              key={item.departId}
+              dataRef={item}
+            />
+          );
+        });
+      }
+    };
     return (
       <div className={styles.normal}>
         <div className="clearfix" style={{ marginBottom: '10px' }}>
@@ -182,6 +211,21 @@ class User extends React.Component {
                   </Select>,
                 )}
               </Form.Item>
+              <Form.Item label="发布部门">
+                {getFieldDecorator('departId', {
+                })(
+                  <TreeSelect
+                    showSearch
+                    dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                    style={{ width: '200px' }}
+                    placeholder="请选择发布部门"
+                    allowClear
+                    onChange={this.treeChange}
+                  >
+                    {renderDepartTreeNodes(treeDepartData)}
+                  </TreeSelect>,
+                )}
+              </Form.Item>
               <Form.Item>
                 {getFieldDecorator('staffName')(<Input placeholder={'请输入员工姓名'} />)}
               </Form.Item>
@@ -190,11 +234,16 @@ class User extends React.Component {
                   搜索
                 </Button>
               </Form.Item>
+              <Form.Item>
+                <Button type="primary" onClick={this.onNewStaffClick}>
+                添加员工
+                </Button>
+              </Form.Item>
             </Form>
           </div>
-          <Button className="pullright" type="primary" onClick={this.onNewStaffClick}>
+          {/* <Button className="pullright">
             添加员工
-          </Button>
+          </Button> */}
         </div>
         <Table
           rowKey={record => record.staffId}
