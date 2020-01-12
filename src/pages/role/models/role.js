@@ -50,7 +50,9 @@ export default {
         payload: {
           editRoleVisible:false,
           roleDetail:{},
-          parentRoleList:[]
+          parentRoleList:[],
+          selectedNodes: {},
+          selectedKeys: [],
         },
       }); 
       yield put({
@@ -66,7 +68,9 @@ export default {
         payload: {
           editRoleVisible:false,
           roleDetail:{},
-          parentRoleList:[]
+          parentRoleList:[],
+          selectedNodes: {},
+          selectedKeys: [],
         },
       }); 
       yield put({
@@ -80,6 +84,8 @@ export default {
         payload: {
           deteleRoleVisible:false,
           roleDetail:{},
+          selectedNodes: {},
+          selectedKeys: [],
         },
       }); 
       yield put({
