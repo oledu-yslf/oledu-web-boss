@@ -10,12 +10,12 @@ const { Option } = Select;
 
 class User extends React.Component {
   pageChange = (page, pageSize) => {
-    const { dispatch, staffName, staffType, state } = this.props;
+    const { dispatch, staffName, staffType, state,departId } = this.props;
     dispatch({
       type: 'user/staffList',
       payload: {
         staffId: '',
-        departId: '',
+        departId,
         staffNo: '',
         staffName,
         sex: '',
@@ -56,6 +56,42 @@ class User extends React.Component {
   onNewStaffClick = () => {
     router.push(`/userEdit`);
   };
+
+  handleExport = e => {
+    e.preventDefault();
+    const { dispatch, staffName, staffType, state,departId } = this.props;
+
+    const fileName = '员工信息.xlsx';
+
+    dispatch({
+      type: 'user/staffExport',
+      payload: {
+        staffId: '',
+        staffNo: '',
+        sex: '',
+        staffName,
+        staffType,
+        state,
+        departId,
+      },
+      callback: blob => {
+        if (window.navigator.msSaveOrOpenBlob) {
+          navigator.msSaveBlob(blob, fileName);
+        } else {
+          const link = document.createElement('a');
+          const evt = document.createEvent('MouseEvents');
+          link.style.display = 'none';
+          link.href = window.URL.createObjectURL(blob);
+          link.download = fileName;
+          document.body.appendChild(link); // 此写法兼容可火狐浏览器
+          evt.initEvent('click', false, false);
+          link.dispatchEvent(evt);
+          document.body.removeChild(link);
+        }
+      }
+    });
+  }
+
   toUserEdit = (data, e) => {
     router.push(`/userEdit?staffId=${data.staffId}`);
   };
@@ -105,7 +141,7 @@ class User extends React.Component {
     });
   }
 
-  
+
 
   render() {
     const { userList, total, loading, deteleUserVisible, staffDetail,treeDepartData } = this.props;
@@ -237,6 +273,11 @@ class User extends React.Component {
               <Form.Item>
                 <Button type="primary" onClick={this.onNewStaffClick}>
                 添加员工
+                </Button>
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" onClick={this.handleExport}>
+                  导出
                 </Button>
               </Form.Item>
             </Form>

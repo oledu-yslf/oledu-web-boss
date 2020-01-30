@@ -14,7 +14,7 @@ class NewRoleModal extends React.Component {
     const { dispatch, form } = this.props;
     const { resetFields } = form;
     resetFields();
-    
+
     dispatch({
       type: 'role/save',
       payload: {
@@ -71,7 +71,7 @@ class NewRoleModal extends React.Component {
     });
   };
 
-  
+
 
 
   render() {
@@ -101,7 +101,7 @@ class NewRoleModal extends React.Component {
     return (
       <Modal
         visible={editRoleVisible}
-        title={'角色编辑'}
+        title={roleDetail.roleId?'角色编辑':'角色新增'}
         okText="保存"
         cancelText="取消"
         confirmLoading={loading}

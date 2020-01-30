@@ -127,7 +127,7 @@ class NewDepartModal extends React.Component {
     return (
       <Modal
         visible={editDepartVisible}
-        title={'部门编辑'}
+        title={departDetail.departId?'部门编辑':'部门新增'}
         okText="保存"
         cancelText="取消"
         confirmLoading={loading}
@@ -160,7 +160,7 @@ class NewDepartModal extends React.Component {
               </Radio.Group>,
             )}
           </Form.Item>
-          {
+          {/*{
             departDetail.departId && <Form.Item label="部门状态">
             {getFieldDecorator('departState', {
               initialValue: departState,
@@ -172,8 +172,8 @@ class NewDepartModal extends React.Component {
               </Radio.Group>,
             )}
           </Form.Item>
-          }
-          
+          }*/}
+
           {departKindType !== 1 ? (
             <Form.Item label="部门所属">
               {getFieldDecorator('parentDepartId', {

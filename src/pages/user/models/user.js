@@ -69,7 +69,7 @@ export default {
           deteleUserVisible:false,
           staffDetail:{},
         },
-      }); 
+      });
       const {staffName,staffType,state} = yield select(state => state.user)
       yield put({
         type: 'staffList',
@@ -86,8 +86,19 @@ export default {
             pageNum: 1,
           },
         },
-      }); 
-    }
+      });
+    },
+    *staffExport({ payload,callback}, { call}) {
+      const response = yield call(service.staffExport, payload);
+      console.log(response);
+      if (response instanceof Blob) {
+        if (callback && typeof callback === 'function') {
+          callback(response);
+        }
+      } else {
+        message.warning('Some error messages...', 5);
+      }
+    },
   },
   reducers: {
     save(state, action) {
