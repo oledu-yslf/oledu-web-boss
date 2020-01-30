@@ -144,6 +144,12 @@ class UserEdit extends React.Component {
       birthday,
       roleVOMap,
     } = staffDetail;
+
+    let requirePwd = true;
+    if (staffPwd){
+      requirePwd = false;
+    }
+
     let rangeTime, birthdayTime;
     if (effDate && expDate) {
       rangeTime = [moment(effDate), moment(expDate)];
@@ -249,14 +255,14 @@ class UserEdit extends React.Component {
               rules: [{ required: true, message: '请输入员工姓名！' }],
             })(<Input />)}
           </Form.Item>
-          {!staffPwd && (
+          {/*{!staffPwd && (*/}
             <Form.Item label="密码">
               {getFieldDecorator('staffPwd', {
-                initialValue: staffPwd,
-                rules: [{ required: true, message: '请输入密码！' }],
-              })(<Input type={inputType} />)}
+                initialValue: '',
+                rules: [{ required: requirePwd, message: '请输入密码！' }],
+              })(<Input type='password' />)}
             </Form.Item>
-          )}
+          {/*)}*/}
 
           <Form.Item label="性别">
             {getFieldDecorator('sex', {
