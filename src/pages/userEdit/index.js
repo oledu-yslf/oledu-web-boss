@@ -56,7 +56,6 @@ class UserEdit extends React.Component {
 
       if (!err) {
         if (!this.props.staffDetail.staffId) {
-          resetFields();
           dispatch({
             type: 'userEdit/staffSave',
             payload: {
@@ -77,9 +76,13 @@ class UserEdit extends React.Component {
               createStaffId: staffId,
               baseStaffRoleList,
             },
+          }).then ((data) => {
+            if (data.successed){
+              resetFields();
+            }
           });
         } else {
-          resetFields();
+          //resetFields();
           dispatch({
             type: 'userEdit/staffUpdate',
             payload: {
@@ -101,6 +104,10 @@ class UserEdit extends React.Component {
               updateStaffId: staffId,
               baseStaffRoleList,
             },
+          }).then ( (data) => {
+            if (data.successed){
+              resetFields();
+            }
           });
         }
       }

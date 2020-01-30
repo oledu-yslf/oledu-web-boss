@@ -25,6 +25,7 @@ export default {
   ],
   proxy: {
     '/api': {
+      //target: 'http://127.0.0.1:8005/',
       target: 'http://39.107.41.56:8005/',
       changeOrigin: true,
       pathRewrite: {

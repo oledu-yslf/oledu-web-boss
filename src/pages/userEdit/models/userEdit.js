@@ -47,7 +47,9 @@ export default {
           router.push('/user');
         });
       }
-      router.push('/user');
+
+      return data;
+      //router.push('/user');
     },
     *staffUpdate({ payload }, { call, put }) {
       const data = yield call(service.staffUpdate, payload);
@@ -56,6 +58,8 @@ export default {
           router.push('/user');
         });
       }
+
+      return data;
     },
     *staffDetail({ payload }, { call, put }) {
       const { data } = yield call(service.staffDetail, payload);
