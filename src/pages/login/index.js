@@ -10,12 +10,21 @@ function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 class LoginForm extends React.Component {
-  
+
   handleSubmit = e => {
     const { dispatch, form, prerouter } = this.props;
     e.preventDefault();
     form.validateFields((err, values) => {
       if (!err) {
+
+        if (values.username !== 'admin'){
+          notification.error({
+            message: "用户名不正确",
+          });
+
+          return;
+        }
+
         dispatch({
           type: 'login/token',
           payload: {
