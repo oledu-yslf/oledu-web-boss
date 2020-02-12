@@ -60,7 +60,7 @@ class NewRoleModal extends React.Component {
               roleCode,
               roleName,
               roleDesc,
-              rolePid,
+              rolePid: rolePid || '',
               updateStaffId: staffId,
               effDate,
               expDate,
