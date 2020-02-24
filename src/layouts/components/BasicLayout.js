@@ -40,13 +40,29 @@ class BasicLayout extends React.Component {
     })
   }
 
+  componentWillMount() {
+    //获取logo信息
+    const {dispatch} = this.props;
+
+    dispatch({
+      type: 'global/queryLogo',
+    });
+  }
+
   render() {
-    const { children,currentRouter,currentRouterName } = this.props;
+    const { children,currentRouter,currentRouterName,logoFileInfo } = this.props;
     const { collapsed ,contentHeight} = this.state;
+
+    let imageUrl = '';
+    if (logoFileInfo) {
+      imageUrl = `api${logoFileInfo.url}\/${logoFileInfo.fileName}`;
+    }
+
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
-          <div className={styles.logo} />
+          <div className={styles.logo} >
+          </div>
           <Menu
             theme="dark"
             defaultSelectedKeys={['1']}
@@ -66,10 +82,20 @@ class BasicLayout extends React.Component {
               <Icon type="user" />
               <span>用户管理</span>
             </Menu.Item>
+            <Menu.Item key="/logo">
+              <Icon type="setting" />
+              <span>Logo设置</span>
+            </Menu.Item>
+
           </Menu>
         </Sider>
         <Layout>
+
+
           <Header style={{ background: '#fff', padding: 0 }}>
+            <div style={{float:"left",marginLeft: '10px'}}>
+              <img src={imageUrl} alt="avatar" style={{width: '96px', height: '48px'}}/>
+            </div>
             <Button
               type="link"
               onClick={this.handleLogout}

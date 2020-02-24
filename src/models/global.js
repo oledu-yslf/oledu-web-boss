@@ -1,3 +1,5 @@
+import * as service from '@/services/index';
+
 const userRouter ='/user,/userEdit'
 const userRouterName = '用户管理';
 
@@ -7,12 +9,16 @@ const departRouterName = '部门管理';
 const roletRouter ='/role,/authEdit'
 const roleRouterName = '角色管理';
 
+const logoRouter ='/logo'
+const logoRouterName = 'Logo管理';
+
 
 export default {
   namespace: 'global',
   state: {
     preRouter: '',
-    currentRouter:''
+    currentRouter:'',
+    logoFileInfo:null,
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -27,7 +33,11 @@ export default {
         }else if(roletRouter.indexOf(pathname)!==-1){
           currentRouter = '/role';
           currentRouterName = '角色管理'
+        } else if (logoRouter.indexOf(pathname) !== -1) {
+          currentRouter = '/logo';
+          currentRouterName = 'Logo管理'
         }
+
         dispatch({
           type:'save',
           payload:{
@@ -39,7 +49,16 @@ export default {
     },
   },
   effects: {
-    
+    *queryLogo({ payload }, { call, put ,select}){
+      const {data} = yield call(service.queryLogo);
+
+      yield put({
+        type: 'save',
+        payload: {
+          logoFileInfo: data,
+        },
+      });
+    },
   },
   reducers: {
     save(state, action) {

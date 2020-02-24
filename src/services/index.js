@@ -3,7 +3,7 @@ import request from '@/utils/request';
 import qs from 'qs'
 /**
  * 课程列表
- * @param {*} params 
+ * @param {*} params
  */
 export async function refreshToken (params) {
   const jwToken = JSON.parse(sessionStorage.getItem('jwToken'));
@@ -21,5 +21,12 @@ export async function refreshToken (params) {
       grant_type:'refresh_token',
       refresh_token
     }),
+  })
+}
+
+export async function queryLogo () {
+  return request({
+    url:  '/api/sys/logo/query',
+    method: 'post',
   })
 }
