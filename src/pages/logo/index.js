@@ -47,6 +47,13 @@ class Logo extends React.Component {
             logoFileInfo: response.data,
           }
         })
+
+        dispatch({
+          type: 'global/save',
+          payload: {
+            logoFileInfo: response.data,
+          }
+        })
       } else {
         message.error("上传图片失败:" + response.msg);
       }
