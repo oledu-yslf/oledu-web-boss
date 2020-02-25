@@ -55,7 +55,7 @@ class BasicLayout extends React.Component {
 
     let imageUrl = '';
     if (logoFileInfo) {
-      imageUrl = `api${logoFileInfo.url}\/${logoFileInfo.fileName}`;
+      imageUrl = `/api${logoFileInfo.url}\/${logoFileInfo.fileName}`;
     }
 
     return (
