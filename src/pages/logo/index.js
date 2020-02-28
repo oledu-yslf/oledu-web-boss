@@ -106,7 +106,7 @@ class Logo extends React.Component {
           beforeUpload={this.beforeFileUpload}
         >
           <Spin spinning={loading}>
-            {logoFileInfo ? <img src={imageUrl} alt="avatar" style={{width: '320px', height: 'auto',maxHeight:'320px'}}/> : uploadButton}
+            {logoFileInfo ? <img src={imageUrl} alt="avatar" style={{width: 'auto', height: 'auto',maxWidth:'320px'}}/> : uploadButton}
           </Spin>
         </Upload>,
 

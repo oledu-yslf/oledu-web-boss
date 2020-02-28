@@ -93,8 +93,8 @@ class BasicLayout extends React.Component {
 
 
           <Header style={{ background: '#fff', padding: 0 }}>
-            <div style={{float:"left",marginLeft: '10px',width:'160px',height: '48px'}}>
-              <img src={imageUrl} alt="avatar" style={{width: '100%', height: 'auto',maxHeight:'48px'}}/>
+            <div className={styles.logo_left}>
+              <img src={imageUrl} alt="avatar" className={styles.image}/>
             </div>
             <Button
               type="link"
