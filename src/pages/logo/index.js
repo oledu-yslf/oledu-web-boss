@@ -74,9 +74,9 @@ class Logo extends React.Component {
     const {logoFileInfo, loading} = this.props;
 
     const uploadButton = (
-      <div >
+      <div  style={{width: '180px', height: 'auto'}}>
         <Icon type={'plus'}/>
-        <div style={{width: '240px', height: '120px'}} className="ant-upload-text">请选择Logo</div>
+        <div style={{width: '180px', height: 'auto'}} className="ant-upload-text">请选择Logo</div>
       </div>
     );
 
@@ -106,7 +106,7 @@ class Logo extends React.Component {
           beforeUpload={this.beforeFileUpload}
         >
           <Spin spinning={loading}>
-            {logoFileInfo ? <img src={imageUrl} alt="avatar" style={{width: '240px', height: '120px'}}/> : uploadButton}
+            {logoFileInfo ? <img src={imageUrl} alt="avatar" style={{width: '320px', height: 'auto'}}/> : uploadButton}
           </Spin>
         </Upload>,
 

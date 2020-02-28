@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import router from 'umi/router';
 import { notification } from 'antd';
 
+
 import { Form, Icon, Input, Button, Row, Col } from 'antd';
 import styles from './index.less';
 
@@ -63,7 +64,7 @@ class LoginForm extends React.Component {
     const usernameError = isFieldTouched('username') && getFieldError('username');
     const passwordError = isFieldTouched('password') && getFieldError('password');
     return (
-      <div className={styles.box}>
+      <div className={styles.loginBox}>
         <Row>
           <Col offset={9} span={6}>
             <Form onSubmit={this.handleSubmit} className={styles['login-form']}>
