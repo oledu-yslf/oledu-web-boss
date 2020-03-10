@@ -12,6 +12,8 @@ const roleRouterName = '角色管理';
 const logoRouter ='/logo'
 const logoRouterName = 'Logo管理';
 
+const loginBannerRouter ='/loginbanner'
+const loginBannerRouterName = '背景图设置';
 
 export default {
   namespace: 'global',
@@ -36,6 +38,10 @@ export default {
         } else if (logoRouter.indexOf(pathname) !== -1) {
           currentRouter = '/logo';
           currentRouterName = 'Logo管理'
+        }
+        else if (loginBannerRouter.indexOf(pathname) !== -1) {
+          currentRouter = '/loginbanner';
+          currentRouterName = '背景图设置'
         }
 
         dispatch({

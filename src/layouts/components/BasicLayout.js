@@ -87,6 +87,10 @@ class BasicLayout extends React.Component {
               <span>Logo设置</span>
             </Menu.Item>
 
+            <Menu.Item key="/loginbanner">
+              <Icon type="picture" />
+              <span>背景图设置</span>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>

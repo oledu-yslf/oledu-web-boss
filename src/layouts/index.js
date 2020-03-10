@@ -17,7 +17,7 @@ class Main extends React.Component {
     const { location, children } = this.props;
     return (
       <div>
-        {location.pathname.indexOf('/login') >= 0 ? (
+        {location.pathname=='/login' ? (
           <LoginLayout>{children}</LoginLayout>
         ) : (
           <BasicLayout>{children}</BasicLayout>
